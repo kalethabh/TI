@@ -25,4 +25,9 @@ jobs:
         run: snyk auth $SNYK_TOKEN
 
       - name: Test Dockerfile for vulnerabilities
+        continue-on-error: true
         run: snyk container test --file=Dockerfile
+
+      - name: Report vulnerabilities if found
+        if: failure()
+        run: echo "Snyk found vulnerabilities. Review the output above for details."

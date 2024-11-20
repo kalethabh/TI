@@ -1,5 +1,5 @@
 # Usa una imagen base actualizada y ligera
-FROM node:18-slim
+FROM node:18-alpine
 
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /usr/src/app
@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 # Copia package.json y package-lock.json primero para aprovechar el caché
 COPY package*.json ./
 
-# Instala las dependencias de la aplicación y limpia el caché de npm
+# Instala las dependencias de la aplicación y limpia el caché
 RUN npm install && npm cache clean --force
 
 # Copia el resto del código de la aplicación al directorio de trabajo
