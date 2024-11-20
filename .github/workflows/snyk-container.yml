@@ -28,6 +28,8 @@ jobs:
         continue-on-error: true
         run: snyk container test --file=Dockerfile
 
-      - name: Report vulnerabilities if found
+      - name: Process results
         if: failure()
-        run: echo "Snyk found vulnerabilities. Review the output above for details."
+        run: |
+          echo "Vulnerabilities were found. Please review the details above."
+          exit 0
