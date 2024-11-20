@@ -47,6 +47,11 @@ jobs:
           name: snyk-results
           path: snyk-result.json
 
+      - name: Handle missing JSON report
+        if: failure()
+        run: |
+          echo "No snyk-result.json was generated. Ensure the scan was completed successfully."
+
       - name: Print vulnerabilities summary
         if: failure()
         run: |
