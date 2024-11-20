@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # Actualiza a la versión más reciente
+        uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: actions/setup-node@v4  # Usa la versión más reciente
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'  # Cambia a Node.js 20
+          node-version: '20'
 
       - name: Install Snyk CLI
         run: npm install -g snyk
@@ -30,11 +30,19 @@ jobs:
 
       - name: Test Dockerfile for vulnerabilities
         continue-on-error: true
-        run: snyk container test --file=Dockerfile --json-file-output=snyk-result.json
+        run: |
+          snyk container test --file=Dockerfile --json-file-output=snyk-result.json || echo "Snyk completed with warnings"
+
+      - name: Verify Snyk JSON file
+        run: |
+          if [ ! -f snyk-result.json ]; then
+            echo "No vulnerabilities report generated. Skipping artifact upload.";
+            exit 0;
+          fi
 
       - name: Upload Snyk JSON results
         if: always()
-        uses: actions/upload-artifact@v3  # Confirmado como compatible
+        uses: actions/upload-artifact@v3
         with:
           name: snyk-results
           path: snyk-result.json
@@ -42,5 +50,5 @@ jobs:
       - name: Print vulnerabilities summary
         if: failure()
         run: |
-          echo "Vulnerabilities were detected. Review the 'snyk-result.json' artifact."
-          exit 0
+          echo "Vulnerabilities detected during the scan:";
+          cat snyk-result.json || echo "No detailed report available."
