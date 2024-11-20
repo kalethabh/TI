@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Snyk CLI
-        uses: snyk/actions/setup@v1
+        uses: snyk/actions/setup-cli@v1
         with:
           version: 'latest'
 
@@ -26,4 +26,4 @@ jobs:
         run: snyk auth $SNYK_TOKEN
 
       - name: Test Dockerfile for vulnerabilities
-        run: snyk container test --file=Dockerfile
+        run: snyk
