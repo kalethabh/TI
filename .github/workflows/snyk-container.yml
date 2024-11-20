@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Actualiza a la versión más reciente
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4  # Usa la versión más reciente
         with:
-          node-version: '16' # Versión recomendada, también compatible con Snyk
+          node-version: '20'  # Cambia a Node.js 20
 
       - name: Install Snyk CLI
         run: npm install -g snyk
@@ -34,7 +34,7 @@ jobs:
 
       - name: Upload Snyk JSON results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3  # Confirmado como compatible
         with:
           name: snyk-results
           path: snyk-result.json
