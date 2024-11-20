@@ -1,20 +1,20 @@
-# Use an official Node.js runtime as a parent image
-FROM node:14
+# Usa una imagen Node.js más ligera y actualizada
+FROM node:18-alpine
 
-# Set the working directory in the container
+# Establece el directorio de trabajo
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
+# Copia y aprovecha el caché para dependencias
 COPY package*.json ./
 
-# Install app dependencies
-RUN npm install
+# Instala dependencias y limpia el caché
+RUN npm install && npm cache clean --force
 
-# Copy the rest of the application code to the working directory
+# Copia el resto del código al contenedor
 COPY . .
 
-# Expose the port the app runs on
+# Expone el puerto de la aplicación
 EXPOSE 3000
 
-# Define the command to run the application
+# Comando por defecto para ejecutar la aplicación
 CMD ["npm", "start"]
