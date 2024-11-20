@@ -1,4 +1,4 @@
-# Usa una imagen Node.js más ligera y actualizada
+# Usa una imagen Node.js ligera y actualizada
 FROM node:18-alpine
 
 # Establece el directorio de trabajo
