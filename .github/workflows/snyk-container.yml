@@ -26,4 +26,4 @@ jobs:
         run: snyk auth $SNYK_TOKEN
 
       - name: Test Dockerfile for vulnerabilities
-        run: snyk
+        run: snyk container test --file=Dockerfile
